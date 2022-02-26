@@ -1,14 +1,13 @@
 // ---------------------------------------------------------------------------------------------------------------------
-// Company:      Visteon Inc.
+// Company:      Visteon Inc / UTEQ.
 // ---------------------------------------------------------------------------------------------------------------------
-// Copyright:    This software is Visteon property.
-//               Duplication or disclosure without Visteon written authorization is prohibited.
+// Copyright:    This software is ERUIZ3 property.
+//               Duplication or disclosure without ERUIZ3 written authorization is prohibited.
 // ---------------------------------------------------------------------------------------------------------------------
-// Project:      Ford Application Library
+// Project:      Application Library
 // Language:     ANSI-C
 // ---------------------------------------------------------------------------------------------------------------------
-// Component:    AccAdapter - ChimesAdapter
-//               Acc Specific Adapter
+// Component:    Funcion Test Header
 // ---------------------------------------------------------------------------------------------------------------------
 // $Revision: $
 // ---------------------------------------------------------------------------------------------------------------------
@@ -17,15 +16,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 
+
 //----------------------------------------------------------------------------------------------------------------------
 // Body Identification
 //----------------------------------------------------------------------------------------------------------------------
-#define ACCCHIMESADAPTER_C "ACCCHIMESADAPTER_C"
 
 //----------------------------------------------------------------------------------------------------------------------
 // Included files to resolve specific definitions in this file
 //----------------------------------------------------------------------------------------------------------------------
-#include "AccChimesAdapter.h"
 
 //----------------------------------------------------------------------------------------------------------------------
 // Local macros
@@ -61,83 +59,19 @@
 //======================================================================================================================
 
 //----------------------------------------------------------------------------------------------------------------------
-/// @brief Invoke AccSoftChimeRequestStatus Rte interface
+/// @brief Invoke 
 ///
-/// @param boolean * data
-///
-/// @return   void
-//----------------------------------------------------------------------------------------------------------------------
-void Read_Acc_Chimes_AccSoftChimeRequestStatus(boolean * data)
-{
-    (void) Rte_Read_Chimes_Generic_Data_SR_AccSoftChimeRequestStatus(data);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief Invoke ACC Rte interface
-///
-/// @param tConfigStatus *data
+/// @param * data
 ///
 /// @return   void
 //----------------------------------------------------------------------------------------------------------------------
-void Read_Acc_Chimes_ConfigVar_ACC(tConfigStatus *data)
-{
-    (void) Rte_Read_Config_Data_SR_ConfigVar_ACC(data);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief Invoke AccSignalsFaulted Rte interface
-///
-/// @param tRxSigsFaulted *data
-///
-/// @return   void
-//----------------------------------------------------------------------------------------------------------------------
-void Read_Acc_Chimes_AccSignalsFaulted(tRxSigsFaulted *data)
-{
-    (void) Rte_Read_CanRxCadsValue_SR_AccSignalsFaulted(data);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief Invoke GetCanSignal Rte interface
-///
-/// @param const tRxSignal RxSignalId, uint32 * const pDestination1P,tRxSignalStatus  * const pDestination2P
-///
-/// @return   void
-//----------------------------------------------------------------------------------------------------------------------
-void Call_Acc_Chimes_GetCanSignal(const tRxSignal RxSignalId, uint32 * const pDestination1P,tRxSignalStatus  * const pDestination2P)
-{
-    (void) Rte_Call_CanRxSignalValue_CS_GetCanSignal(RxSignalId, pDestination1P, pDestination2P);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief Invoke Status Rte interface
-///
-/// @param const tWarnings_Master_List Warning_Number, boolean * pWarning_Status
-///
-/// @return   void
-//----------------------------------------------------------------------------------------------------------------------
-void Call_Acc_Chimes_Get_Warning_Status(const tWarnings_Master_List Warning_Number, boolean * pWarning_Status)
-{
-    (void) Rte_Call_Warnings_Service_CS_Get_Warning_Status(Warning_Number, pWarning_Status);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief Invoke AccSoftChimeRequestStatus Rte interface
-///
-/// @param boolean data
-///
-/// @return   void
-//----------------------------------------------------------------------------------------------------------------------
-void Write_Acc_Chimes_AccSoftChimeRequestStatus(boolean data)
-{
-    (void) Rte_Write_Chimes_Generic_Data_SR_AccSoftChimeRequestStatus(data);
-}
 
 /**==========================================================================*/
-/* BookShelf Revision Notes=================================================*/
+/* Revision Notes=================================================*/
 /**====================================================================================================================================
  **      CDSID         Date        Traceability              Description
  **====================================================================================================================================
- **      fangulo      11-Sep-2020      1026526      Non-Platform Adapter - Controller separation for Acc
+ **      eruiz3      26-Feb-2022      0000001      Initial Template
  **====================================================================================================================================*/
  /* end of file =============================================================*/
 
