@@ -62,8 +62,7 @@ void main(void)
 {
     while(1)
     {
-        FunctionTest();
-        ADDPI();
+        Reporte_De_Falla(Corto_t);
     }
 }
 
