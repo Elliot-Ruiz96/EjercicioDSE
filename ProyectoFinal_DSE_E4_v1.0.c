@@ -1,4 +1,44 @@
+/*
+Proyecto Integrador
+Equipo:
+Elliot Ruiz
+Oswaldo Lara
+Andres MuÃ±oz
+Eber Hernandez
 
+
+Version Inicial para checar las principales actividades que se requiren 
+*/
+/*
+ *  ======== heartBeatFxn ========
+ *  Toggle the Board_LED0. The Task_sleep is determined by arg0 which
+ *  is configured for the heartBeat Task instance.
+ */
+Void heartBeatFxn(UArg arg0, UArg arg1)
+{
+	uint8_t uiDigit0 = 0;
+	uint8_t uiDigit1 = 1;
+	uint8_t uiDigit2 = 2;
+	uint8_t uiDigit3 = 3;
+	uint8_t uiDigit4 = 4;
+	uint8_t uiDigit5 = 5;
+	uint8_t uiDigit6 = 6;
+	uint8_t uiDigit7 = 7;
+
+Void tarea3(UArg arg0, UArg arg1)
+{
+    while (1) {
+        Task_sleep((unsigned int)arg0);
+        if(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) == 0)
+        {
+        	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x01);
+        }
+        else
+        {
+        	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0, 0x00);
+        }
+    }
+}
 /* XDCtools Header files */
 #include <xdc/std.h>
 #include <xdc/runtime/System.h>
@@ -21,7 +61,7 @@
 #include "driverlib/debug.h"     // Para poder debuggear
 #include "driverlib/sysctl.h"    // Manejo de timers
 #include "driverlib/gpio.h"      // Manejo de entradas y salidas
-#include "driverlib/adc.h"       // Incluir Definiciones del módulo ADC
+#include "driverlib/adc.h"       // Incluir Definiciones del mï¿½dulo ADC
 
 #define TASKSTACKSIZE   512
 
@@ -29,10 +69,11 @@ Task_Struct taskADCStruct;
 Char taskADCStack[TASKSTACKSIZE];
 
 
+
 /* ADC variables  */
-   uint32_t ui32ADC0Value[4];      //  Declaración de la variable ui32ADC0Value que es un vector de 4 localidades de memoria
+   uint32_t ui32ADC0Value[4];      //  Declaraciï¿½n de la variable ui32ADC0Value que es un vector de 4 localidades de memoria
    uint8_t  banderaADC = 0;
-   volatile uint32_t ui32Potenciometro;  //  Declaración de la variable ui32Potenciometro para guardar 2 lecturas del potenciometro
+   volatile uint32_t ui32Potenciometro;  //  Declaraciï¿½n de la variable ui32Potenciometro para guardar 2 lecturas del potenciometro
 
    #define GPIO_PORTN_BASE 0x40064000 // Memory location in register map
 /*
@@ -43,15 +84,15 @@ Void taskADCFxn(UArg arg0, UArg arg1)
 {
     while (1)
     {
-    			ADCIntClear(ADC0_BASE, 1);     //  Limpiar la interrupción del ADC
+    			ADCIntClear(ADC0_BASE, 1);     //  Limpiar la interrupciï¿½n del ADC
 
-    	         ADCProcessorTrigger(ADC0_BASE, 1);     //  Inicio de conversión (TRIGGER) del ADC0
+    	         ADCProcessorTrigger(ADC0_BASE, 1);     //  Inicio de conversiï¿½n (TRIGGER) del ADC0
 
-    	         while(!ADCIntStatus(ADC0_BASE, 1, false))  //  Rutina de espera por el fin de conversión del ADC0
+    	         while(!ADCIntStatus(ADC0_BASE, 1, false))  //  Rutina de espera por el fin de conversiï¿½n del ADC0
     	         {
     	         }
 
-    	         ADCSequenceDataGet(ADC0_BASE, 1, ui32ADC0Value);   //  Traer los resusultados de la conversión (4 muestras) y guardar en el vector ui32ADC0Value
+    	         ADCSequenceDataGet(ADC0_BASE, 1, ui32ADC0Value);   //  Traer los resusultados de la conversiï¿½n (4 muestras) y guardar en el vector ui32ADC0Value
 
     	         ui32Potenciometro= (ui32ADC0Value[0] + ui32ADC0Value[1] + 1)/2;
 
@@ -89,22 +130,22 @@ int main(void)
     //
     SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
 
-        										// Encontrar y seleccionar que periférico se va a utilizar
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); //  Habilitar el periférico ADC0
+        										// Encontrar y seleccionar que perifï¿½rico se va a utilizar
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0); //  Habilitar el perifï¿½rico ADC0
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);// Habilitar el puerto E
 
-    ADCSequenceConfigure(ADC0_BASE, 1, ADC_TRIGGER_PROCESSOR, 0);   //  Configurar el secuenciador (módulo ADC0, Secuenciador SS1, Modo de disparo por sw, nivel de prioridad 0)
+    ADCSequenceConfigure(ADC0_BASE, 1, ADC_TRIGGER_PROCESSOR, 0);   //  Configurar el secuenciador (mï¿½dulo ADC0, Secuenciador SS1, Modo de disparo por sw, nivel de prioridad 0)
 
     GPIOPinTypeADC(GPIO_PORTE_BASE,GPIO_PIN_3), // Configurar PE3 Channel 0
 
 
 
-    ADCSequenceStepConfigure(ADC0_BASE, 1, 0, ADC_CTL_TS);      //  Configurar el paso del secuenciador (módulo ADC0, Secuenciador SS1, número de paso = 0, fuente señal anal. Sensor temperatura)
-    ADCSequenceStepConfigure(ADC0_BASE, 1, 1, ADC_CTL_TS);      //  Configurar el paso del secuenciador (módulo ADC0, Secuenciador SS1, número de paso = 1, fuente señal anal. Sensor temperatura)
-    ADCSequenceStepConfigure(ADC0_BASE, 1, 2, ADC_CTL_TS);      //  Configurar el paso del secuenciador (módulo ADC0, Secuenciador SS1, número de paso = 2, fuente señal anal. Sensor temperatura)
-    ADCSequenceStepConfigure(ADC0_BASE,1,3,ADC_CTL_TS|ADC_CTL_IE|ADC_CTL_END);  //  Configurar el paso del secuenciador (módulo ADC0, Secuenciador SS1, número de paso = 0, fuente señal anal. Sensor temperatura, último paso)
+    ADCSequenceStepConfigure(ADC0_BASE, 1, 0, ADC_CTL_TS);      //  Configurar el paso del secuenciador (mï¿½dulo ADC0, Secuenciador SS1, nï¿½mero de paso = 0, fuente seï¿½al anal. Sensor temperatura)
+    ADCSequenceStepConfigure(ADC0_BASE, 1, 1, ADC_CTL_TS);      //  Configurar el paso del secuenciador (mï¿½dulo ADC0, Secuenciador SS1, nï¿½mero de paso = 1, fuente seï¿½al anal. Sensor temperatura)
+    ADCSequenceStepConfigure(ADC0_BASE, 1, 2, ADC_CTL_TS);      //  Configurar el paso del secuenciador (mï¿½dulo ADC0, Secuenciador SS1, nï¿½mero de paso = 2, fuente seï¿½al anal. Sensor temperatura)
+    ADCSequenceStepConfigure(ADC0_BASE,1,3,ADC_CTL_TS|ADC_CTL_IE|ADC_CTL_END);  //  Configurar el paso del secuenciador (mï¿½dulo ADC0, Secuenciador SS1, nï¿½mero de paso = 0, fuente seï¿½al anal. Sensor temperatura, ï¿½ltimo paso)
 
-    ADCSequenceEnable(ADC0_BASE, 1);        //  Habilitar la conversión del ADC0
+    ADCSequenceEnable(ADC0_BASE, 1);        //  Habilitar la conversiï¿½n del ADC0
 
     /* Construct heartBeat Task  thread */
     Task_Params_init(&taskParams);
