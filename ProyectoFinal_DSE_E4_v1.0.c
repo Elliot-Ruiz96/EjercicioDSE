@@ -154,6 +154,32 @@ int main(void)
     taskParams.stack = &taskADCStack;
     Task_construct(&taskADCStruct, (Task_FuncPtr)taskADCFxn, &taskParams, NULL);
 
+    /*Parametros de las tareas*/
+     /* Construct heartBeat Task  thread */
+    Task_Params_init(&taskParams);
+    taskParams.arg0 = 433;
+    taskParams.stackSize = TASKSTACKSIZE;
+    taskParams.stack = &task0Stack;
+    Task_construct(&task0Struct, (Task_FuncPtr)heartBeatFxn, &taskParams, NULL);
+
+    // 3. Parametros de la tarea
+    taskParams.arg0 = 769;
+    taskParams.stackSize = TASKSTACKSIZE;
+	taskParams.stack = &task1Stack;
+	Task_construct(&task1Struct, (Task_FuncPtr)tarea1, &taskParams, NULL);
+
+	taskParams.arg0 = 1259;
+	taskParams.stackSize = TASKSTACKSIZE;
+	taskParams.stack = &task2Stack;
+	Task_construct(&task2Struct, (Task_FuncPtr)tarea2, &taskParams, NULL);
+
+	taskParams.arg0 = 20;
+	taskParams.stackSize = TASKSTACKSIZE;
+	taskParams.stack = &task3Stack;
+	Task_construct(&task3Struct, (Task_FuncPtr)tarea3, &taskParams, NULL);
+
+	//Time sleep (uS) --> 10ms
+	time_sleep = 100000 / Clock_tickPeriod;
 
 
 
